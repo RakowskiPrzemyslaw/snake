@@ -1,0 +1,27 @@
+import { atom, useAtom } from "jotai";
+
+const lettersAtom = atom([
+  { letter: "D", position: { x: -9, y: 9 } },
+  { letter: "U", position: { x: 9, y: 2 } },
+  { letter: "P", position: { x: 4, y: 3 } },
+  { letter: "A", position: { x: -4, y: -9 } },
+]);
+
+const eatenLettersAtom = atom([]);
+
+export function useLetters() {
+  const [letters, setLetters] = useAtom(lettersAtom);
+  const [eatenLetters, setEatenLetters] = useAtom(eatenLettersAtom);
+
+  const eatLetter = (letter) => {
+    setEatenLetters((prev) => [...prev, letter]);
+    setLetters((prev) => prev.filter((l) => l.letter !== letter));
+  };
+
+  return {
+    letters,
+    setLetters,
+    eatLetter,
+    eatenLetters,
+  };
+}

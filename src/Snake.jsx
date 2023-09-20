@@ -1,12 +1,21 @@
-import { Center } from "@react-three/drei";
+import { useSnake } from "./hooks/useSnake";
 
 export function Snake() {
+  const { snake } = useSnake();
+
   return (
-    <Center back position={[-10, 10, 0.5]}>
-      <mesh>
-        <boxGeometry args={[1, 1, 0.5]} />
-        <meshStandardMaterial />
-      </mesh>
-    </Center>
+    <group>
+      {snake.map((segment, index) => {
+        return (
+          <mesh
+            key={index}
+            position={[segment.position.x, segment.position.y, 0]}
+          >
+            <boxGeometry args={[1, 1, 0.5]} />
+            <meshStandardMaterial color="red" />
+          </mesh>
+        );
+      })}
+    </group>
   );
 }
