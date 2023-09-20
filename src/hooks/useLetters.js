@@ -1,11 +1,13 @@
 import { atom, useAtom } from "jotai";
 
-const lettersAtom = atom([
+const defaultLetters = [
   { letter: "D", position: { x: -9, y: 9 } },
   { letter: "U", position: { x: 9, y: 2 } },
   { letter: "P", position: { x: 4, y: 3 } },
   { letter: "A", position: { x: -4, y: -9 } },
-]);
+];
+
+const lettersAtom = atom(defaultLetters);
 
 const eatenLettersAtom = atom([]);
 
@@ -18,10 +20,15 @@ export function useLetters() {
     setLetters((prev) => prev.filter((l) => l.letter !== letter));
   };
 
+  const resetLetters = () => {
+    setLetters(defaultLetters);
+    setEatenLetters([]);
+  };
+
   return {
     letters,
-    setLetters,
     eatLetter,
     eatenLetters,
+    resetLetters,
   };
 }

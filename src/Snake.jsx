@@ -12,7 +12,7 @@ export function Snake() {
             position={[segment.position.x, segment.position.y, 0]}
           >
             <boxGeometry args={[1, 1, 0.5]} />
-            <meshStandardMaterial color="red" />
+            <meshStandardMaterial color="green" />
           </mesh>
         );
       })}

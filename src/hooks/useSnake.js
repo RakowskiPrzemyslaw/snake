@@ -10,7 +10,7 @@ export function useSnake() {
   const [time, setTime] = useAtom(timeAtom);
   const [direction, setDirection] = useAtom(directionAtom);
   const [snake, setSnake] = useAtom(snakeAtom);
-  const { eatLetter, letters } = useLetters();
+  const { eatLetter, letters, resetLetters } = useLetters();
 
   const updatePosition = () => {
     setSnake((prevSnake) => {
@@ -20,8 +20,6 @@ export function useSnake() {
           letter.position.x === snakeHead.x && letter.position.y === snakeHead.y
         );
       });
-
-      console.log(letterCollision);
 
       if (letterCollision) {
         eatLetter(letterCollision.letter);
@@ -103,7 +101,6 @@ export function useSnake() {
 
   useEffect(() => {
     if (checkCollision()) {
-      console.log("Game Over");
       reset();
     }
   }, [snake]);
@@ -112,6 +109,7 @@ export function useSnake() {
     setTime(0);
     setDirection({ x: 1, y: 0 });
     setSnake([{ position: { x: 0, y: 0 } }]);
+    resetLetters();
   };
 
   return {
