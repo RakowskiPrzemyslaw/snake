@@ -5,6 +5,7 @@ import { useLetters } from "./useLetters";
 const timeAtom = atom(0);
 const directionAtom = atom({ x: 1, y: 0 });
 const snakeAtom = atom([{ position: { x: 0, y: 0 } }]);
+let interval;
 
 export function useSnake() {
   const [time, setTime] = useAtom(timeAtom);
@@ -39,10 +40,19 @@ export function useSnake() {
 
   useEffect(() => {
     updatePosition();
-  }, [time]);
+  }, [time, direction]);
 
   useEffect(() => {
     const onKeydown = (event) => {
+      if (event.key === "Escape") {
+        return reset();
+      }
+      if (!interval) {
+        interval = setInterval(() => {
+          setTime((prevTime) => prevTime + 1);
+        }, 300);
+      }
+
       if (event.key === "ArrowUp") {
         setDirection((prevDirection) => {
           if (prevDirection.y === -1) return prevDirection;
@@ -71,12 +81,9 @@ export function useSnake() {
 
     document.addEventListener("keydown", onKeydown);
 
-    const interval = setInterval(() => {
-      setTime((prevTime) => prevTime + 1);
-    }, 200);
-
     return () => {
       clearInterval(interval);
+      interval = null;
       document.removeEventListener("keydown", onKeydown);
     };
   }, []);
@@ -110,6 +117,8 @@ export function useSnake() {
     setDirection({ x: 1, y: 0 });
     setSnake([{ position: { x: 0, y: 0 } }]);
     resetLetters();
+    clearInterval(interval);
+    interval = null;
   };
 
   return {
