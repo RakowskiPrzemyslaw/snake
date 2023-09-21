@@ -1,28 +1,29 @@
 import { Center, Text3D } from "@react-three/drei";
-import { useLetters } from "./hooks/useLetters";
+import { useAtom } from "jotai";
+import { collectiblesAtom } from "./context/game";
 
 export function Letters() {
-  const { letters } = useLetters();
+  const [collectibles] = useAtom(collectiblesAtom);
 
   return (
     <group>
-      {letters.map((letter) => {
-        return <Letter key={letter.code} letter={letter} />;
+      {collectibles.map((collectible) => {
+        return <Letter key={collectible.id} collectible={collectible} />;
       })}
     </group>
   );
 }
 
-function Letter({ letter }) {
+function Letter({ collectible }) {
   return (
     <group>
       <pointLight
         color="orange"
         castShadow
         intensity={6}
-        position={[letter.position.x - 0.5, letter.position.y - 0.5, 2]}
+        position={[collectible.position.x - 0.5, collectible.position.y - 0.5, 2]}
       />
-      <Center position={[letter.position.x, letter.position.y, 0]}>
+      <Center position={[collectible.position.x, collectible.position.y, 0]}>
         <Text3D
           castShadow
           receiveShadow
@@ -34,7 +35,7 @@ function Letter({ letter }) {
           height={0.1}
           size={0.6}
         >
-          {letter.code}
+          {collectible.code}
           <meshStandardMaterial color="white" />
         </Text3D>
       </Center>
