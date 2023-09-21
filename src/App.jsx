@@ -1,24 +1,32 @@
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { Canvas, useThree } from "@react-three/fiber";
+import { OrbitControls, OrthographicCamera } from "@react-three/drei";
 import { Snake } from "./Snake";
 import { Letters } from "./Letters";
 import { useLetters } from "./hooks/useLetters";
 
 function App() {
   const { eatenLetters } = useLetters();
+
   return (
     <>
       <h1 className="text-4xl">Snake Game</h1>
       <h2 className="text-3xl">Eaten letters: {eatenLetters} </h2>
       <div className="w-full h-full">
-        <Canvas camera={{ position: [0, 0, 20] }}>
-          <OrbitControls />
+        <Canvas>
+          <OrthographicCamera
+            makeDefault
+            zoom={40}
+            near={1}
+            far={2000}
+            position={[0, 0, 2]}
+          />
+          {/* <OrbitControls /> */}
           <ambientLight intensity={1} />
           <Snake />
           <Letters />
 
           <mesh>
-            <planeGeometry args={[21, 21, 21, 21]} />
+            <planeGeometry args={[21, 11, 21, 11]} />
             <meshStandardMaterial wireframe color="black" />
           </mesh>
         </Canvas>

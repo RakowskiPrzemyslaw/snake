@@ -1,10 +1,10 @@
 import { atom, useAtom } from "jotai";
 
 const defaultLetters = [
-  { letter: "D", position: { x: -9, y: 9 } },
+  { letter: "D", position: { x: -9, y: 4 } },
   { letter: "U", position: { x: 9, y: 2 } },
   { letter: "P", position: { x: 4, y: 3 } },
-  { letter: "A", position: { x: -4, y: -9 } },
+  { letter: "A", position: { x: -4, y: -4 } },
 ];
 
 const lettersAtom = atom(defaultLetters);
