@@ -6,5 +6,6 @@ export const collectiblesAtom = atom(gameBoard.collectiblesOnBoard);
 export const roundAtom = atom({
     round: gameBoard.roundNumber,
     score: gameBoard.score,
-    word: gameBoard.wordProgress
+    word: gameBoard.wordProgress,
+    isGameOver: gameBoard.isGameOver,
 });
