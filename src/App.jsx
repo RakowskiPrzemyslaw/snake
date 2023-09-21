@@ -8,11 +8,12 @@ import { Snake } from "./Snake";
 import { Letters } from "./Letters";
 import { Background } from "./Background";
 import { useAtom } from "jotai";
-import { roundAtom } from "./context/game";
+import { roundAtom, roundTimeAtom } from "./context/game";
 import { PostProcessing } from "./PostProcessing";
 
 function App() {
   const [{ round, score, word, isGameOver }] = useAtom(roundAtom);
+  const [roundTime] = useAtom(roundTimeAtom);
 
   return (
     <>
@@ -25,6 +26,7 @@ function App() {
       <h2 className="text-4xl">{`Word collected: ${word
         .map((char) => (char.isCollected ? char.code : "_"))
         .join("")}`}</h2>
+      <h2 className="text-4xl">{`Round time: ${roundTime} sec`}</h2>
       {isGameOver && <h2 className="text-4xl">Game Over</h2>}
       <div className="w-full h-full">
         <Canvas>

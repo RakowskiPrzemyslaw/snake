@@ -9,3 +9,4 @@ export const roundAtom = atom({
     word: gameBoard.wordProgress,
     isGameOver: gameBoard.isGameOver,
 });
+export const roundTimeAtom = atom(0);

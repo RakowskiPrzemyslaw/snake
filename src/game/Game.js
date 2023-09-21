@@ -103,6 +103,10 @@ class Game {
     }
 
     move(direction) {
+        if (direction.x === 0 && direction.y === 0) {
+            return;
+        }
+
         const newPosition = {
             x: this.snakeHead.x + direction.x,
             y: this.snakeHead.y + direction.y,
@@ -120,11 +124,13 @@ class Game {
             reverseTransY(newPosition.y) < 0 ||
             reverseTransY(newPosition.y) > HEIGHT - 1
         ) {
+            console.log('Game over - our of board');
             this.isGameOver = true;
             return;
         }
 
         if (this.isOccupiedBySnake(reverseTransX(newPosition.x), reverseTransY(newPosition.y))) {
+            console.log('Game over - crash with snake tail');
             this.isGameOver = true;
             return;
         }
