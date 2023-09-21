@@ -125,6 +125,6 @@
     ],
     "rules": {
         "snakeSpeed": 300,
-        "roundTime": 120000
+        "roundTime": 60
     }
 }

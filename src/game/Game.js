@@ -131,6 +131,11 @@ class Game {
 
         if (this.isOccupiedBySnake(reverseTransX(newPosition.x), reverseTransY(newPosition.y))) {
             console.log('Game over - crash with snake tail');
+            console.log('New position', newPosition.x, newPosition.y);
+            console.log('New matrix position', reverseTransX(newPosition.x), reverseTransY(newPosition.y));
+            console.log('Snake body', this.snakeBody);
+            console.log('Matrix', this.board);
+            console.log('Matrix', this.board.reduce((acc, row) => acc + "\n" + row.map(x => x.join(' ')), ''));
             this.isGameOver = true;
             return;
         }
@@ -164,7 +169,8 @@ class Game {
 
             this.snakeSize++;
         } else {
-            this.snakeBody.shift();
+            const removed = this.snakeBody.shift();
+            this.board[reverseTransX(removed.position.x)][reverseTransY(removed.position.y)] = FIELDS.EMPTY;
         }
 
         this.board[reverseTransX(this.snakeHead.x)][
