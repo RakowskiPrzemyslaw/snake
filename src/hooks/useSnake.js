@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { atom, useAtom } from "jotai";
 import { gameBoard } from "../game/Game";
-import { collectiblesAtom, snakeAtom } from "../context/game";
+import { collectiblesAtom, roundAtom, snakeAtom } from "../context/game";
 
 const timeAtom = atom(0);
 const directionAtom = atom({ x: 0, y: 0 });
@@ -12,6 +12,7 @@ export function useSnake() {
   const [direction, setDirection] = useAtom(directionAtom);
   const [snake, setSnake] = useAtom(snakeAtom);
   const [, setCollectibles] = useAtom(collectiblesAtom);
+  const [, setRound] = useAtom(roundAtom);
 
   const onKeydown = (event) => {
     if (event.key === "Escape") {
@@ -69,6 +70,11 @@ export function useSnake() {
         ...gameBoard.snakeBody,
     ]);
     setCollectibles(gameBoard.collectiblesOnBoard);
+    setRound({
+        round: gameBoard.roundNumber,
+        score: gameBoard.score,
+        word: gameBoard.wordProgress
+    });
 
   }, [time, direction]);
 

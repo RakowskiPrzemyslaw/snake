@@ -17,8 +17,6 @@ const FIELDS = {
 
 const WIDTH = game.size.x * 2 + 1;
 const HEIGHT = game.size.y * 2 + 1;
-const BOARD_SIZE = WIDTH * HEIGHT;
-const START_NB_OF_COLLECTIBLES = 4;
 const NB_OF_RAND_COLLECTIBLES = 4;
 
 const randCoord = () => ({
@@ -42,6 +40,23 @@ class Game {
         this.reset();
     }
 
+    reset() {
+        this.isGameOver = false;
+        this.snakeHead = { x: 0, y: 0 };
+        this.snakeBody = [{ position: { x: 0, y: 0 }}];
+        this.snakeSize = 1;
+        this.collectiblesOnBoard = [];
+        this.eatenCollectibles = [];
+        this.score = 0;
+        this.alreadySelectedWords = [];
+        this.roundNumber = 1;
+        this.wordProgress = [];
+
+        this.board = new Array(WIDTH).fill([]).map(() => new Array(HEIGHT).fill(FIELDS.EMPTY));
+
+        this.nextRound();
+    }
+
     removeCollectibles() {
         this.collectiblesOnBoard = [];
         
@@ -59,6 +74,10 @@ class Game {
 
         for (let i = 0; i < this.selectedWord.length; i++) {
             this.addCollectible(this.selectedWord[i]);
+            this.wordProgress.push({
+                code: this.selectedWord[i],
+                isCollected: this.selectedWord[i] === ' ' ? true : false,
+            });
         }
 
         for (let i = 0; i < NB_OF_RAND_COLLECTIBLES; i++) {
@@ -92,6 +111,8 @@ class Game {
             // add to score
             this.eatenCollectibles.push(collected);
             this.collectiblesOnBoard = this.collectiblesOnBoard.filter((collectible) => collectible.id !== collected.id);
+            const wordChar = this.wordProgress.find((char) => char.code === collected.code && !char.isCollected);
+            wordChar.isCollected = true;
             console.log(this.collectiblesOnBoard);
             this.snakeSize++;
         } else {
@@ -145,20 +166,6 @@ class Game {
 
         this.selectedWord = word;
         this.alreadySelectedWords.push(word);
-    }
-
-    reset() {
-        this.snakeHead = { x: 0, y: 0 };
-        this.snakeBody = [{ position: { x: 0, y: 0 }}];
-        this.snakeSize = 1;
-        this.collectiblesOnBoard = [];
-        this.eatenCollectibles = [];
-        this.score = 0;
-        this.alreadySelectedWords = [];
-
-        this.board = new Array(WIDTH).fill([]).map(() => new Array(HEIGHT).fill(FIELDS.EMPTY));
-
-        this.nextRound();
     }
 }
 
