@@ -1,9 +1,9 @@
-import { Canvas, useThree } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { OrbitControls, OrthographicCamera } from "@react-three/drei";
 import { Snake } from "./Snake";
 import { Letters } from "./Letters";
 import { useLetters } from "./hooks/useLetters";
-import game from "../game.json";
+import { Background } from "./Background";
 
 function App() {
   const { eatenLetters } = useLetters();
@@ -21,22 +21,11 @@ function App() {
             far={2000}
             position={[0, 0, 20]}
           />
-          {/* <OrbitControls /> */}
+          <OrbitControls />
           <ambientLight intensity={1} />
+          <Background />
           <Snake />
           <Letters />
-
-          <mesh>
-            <planeGeometry
-              args={[
-                game.size.x * 2 + 1,
-                game.size.y * 2 + 1,
-                game.size.x * 2 + 1,
-                game.size.y * 2 + 1,
-              ]}
-            />
-            <meshStandardMaterial wireframe color="black" />
-          </mesh>
         </Canvas>
       </div>
     </>
