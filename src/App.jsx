@@ -3,6 +3,7 @@ import { OrbitControls, OrthographicCamera } from "@react-three/drei";
 import { Snake } from "./Snake";
 import { Letters } from "./Letters";
 import { useLetters } from "./hooks/useLetters";
+import game from "../game.json";
 
 function App() {
   const { eatenLetters } = useLetters();
@@ -26,7 +27,14 @@ function App() {
           <Letters />
 
           <mesh>
-            <planeGeometry args={[21, 11, 21, 11]} />
+            <planeGeometry
+              args={[
+                game.size.x * 2 + 1,
+                game.size.y * 2 + 1,
+                game.size.x * 2 + 1,
+                game.size.y * 2 + 1,
+              ]}
+            />
             <meshStandardMaterial wireframe color="black" />
           </mesh>
         </Canvas>

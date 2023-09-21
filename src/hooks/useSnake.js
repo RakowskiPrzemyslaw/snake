@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { atom, useAtom } from "jotai";
 import { useLetters } from "./useLetters";
+import game from "../../game.json";
 
 const timeAtom = atom(0);
 const directionAtom = atom({ x: 0, y: 0 });
@@ -49,7 +50,9 @@ export function useSnake() {
   const checkCollision = () => {
     const snakeHead = snake[0].position;
 
-    const outOfBounds = Math.abs(snakeHead.x) > 10 || Math.abs(snakeHead.y) > 5;
+    const outOfBounds =
+      Math.abs(snakeHead.x) > game.size.x ||
+      Math.abs(snakeHead.y) > game.size.y;
 
     if (snake.length <= 2) return outOfBounds;
 
@@ -101,7 +104,7 @@ export function useSnake() {
 
   const reset = () => {
     setTime(0);
-    setDirection({ x: 1, y: 0 });
+    setDirection({ x: 0, y: 0 });
     setSnake([{ position: { x: 0, y: 0 } }]);
     resetLetters();
     clearInterval(interval);
