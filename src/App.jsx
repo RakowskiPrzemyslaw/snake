@@ -1,33 +1,41 @@
 import { Canvas } from "@react-three/fiber";
-import {
-  OrbitControls,
-  OrthographicCamera,
-  PositionalAudio,
-} from "@react-three/drei";
+import { OrbitControls, OrthographicCamera } from "@react-three/drei";
 import { Snake } from "./Snake";
 import { Letters } from "./Letters";
 import { Background } from "./Background";
 import { useAtom } from "jotai";
-import { roundAtom, roundTimeAtom } from "./context/game";
+import { roundAtom } from "./context/game";
 import { PostProcessing } from "./PostProcessing";
+import { Timer } from "./Timer";
+import { Logo } from "./Logo";
+import { useEffect } from "react";
 
 function App() {
   const [{ round, score, word, isGameOver }] = useAtom(roundAtom);
-  const [roundTime] = useAtom(roundTimeAtom);
+
+  useEffect(() => {}, [isGameOver]);
 
   return (
     <>
-      <h1 className="text-4xl">Snake Game</h1>
-      <h2 className="text-4xl">{`Score: ${score}`}</h2>
-      <h2 className="text-4xl">{`Round: ${round}`}</h2>
-      <h2 className="text-4xl">{`Word to find: ${word
-        .map((char) => char.code)
-        .join("")}`}</h2>
-      <h2 className="text-4xl">{`Word collected: ${word
-        .map((char) => (char.isCollected ? char.code : "_"))
-        .join("")}`}</h2>
-      <h2 className="text-4xl">{`Round time: ${roundTime} sec`}</h2>
-      {isGameOver && <h2 className="text-4xl">Game Over</h2>}
+      <div className="fixed z-10 text-white w-full p-2">
+        <div className="flex justify-between w-full">
+          <div className="flex">
+            <Logo />
+            <h2 className="text-4xl">{`Score: ${score}`}</h2>
+          </div>
+          <h2 className="text-4xl">
+            {word.map((char, index) => (
+              <span
+                key={char.code + index}
+                className={char.isCollected ? "text-amber-500" : ""}
+              >
+                {char.code}
+              </span>
+            ))}
+          </h2>
+          <h2 className="text-4xl">{`Round: ${round}`}</h2>
+        </div>
+      </div>
       <div className="w-full h-full">
         <Canvas>
           <OrthographicCamera
@@ -39,6 +47,7 @@ function App() {
           />
 
           <OrbitControls />
+          <Timer />
 
           <PostProcessing />
           <Background />
