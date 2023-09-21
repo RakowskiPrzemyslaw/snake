@@ -19,6 +19,11 @@ const WIDTH = game.size.x * 2 + 1;
 const HEIGHT = game.size.y * 2 + 1;
 const NB_OF_RAND_COLLECTIBLES = 4;
 
+const WORD_BONUS = 10;
+const CHAR_BONUS = 1;
+const CHAR_PENALTY = -1;
+const ORDER_BONUS = 10;
+
 const randCoord = () => ({
     x: Math.floor(Math.random() * game.size.x),
     y: Math.floor(Math.random() * game.size.y),
@@ -49,8 +54,9 @@ class Game {
         this.eatenCollectibles = [];
         this.score = 0;
         this.alreadySelectedWords = [];
-        this.roundNumber = 1;
+        this.roundNumber = 0;
         this.wordProgress = [];
+        this.strikeCounter = 0;
 
         this.board = new Array(WIDTH).fill([]).map(() => new Array(HEIGHT).fill(FIELDS.EMPTY));
 
@@ -71,6 +77,7 @@ class Game {
     nextRound() {
         this.removeCollectibles();
         this.selectWord();
+        this.wordProgress = [];
 
         for (let i = 0; i < this.selectedWord.length; i++) {
             this.addCollectible(this.selectedWord[i]);
@@ -83,6 +90,8 @@ class Game {
         for (let i = 0; i < NB_OF_RAND_COLLECTIBLES; i++) {
             this.addCollectible();
         }
+
+        this.roundNumber++;
     }
 
     move(direction) {
@@ -107,13 +116,19 @@ class Game {
         const collected = this.collectiblesOnBoard.find((collectible) => collectible.position.x === this.snakeHead.x && collectible.position.y === this.snakeHead.y);
 
         if (collected) {
-            console.log('Collected: ', collected);
             // add to score
             this.eatenCollectibles.push(collected);
             this.collectiblesOnBoard = this.collectiblesOnBoard.filter((collectible) => collectible.id !== collected.id);
+
             const wordChar = this.wordProgress.find((char) => char.code === collected.code && !char.isCollected);
-            wordChar.isCollected = true;
-            console.log(this.collectiblesOnBoard);
+
+            if (wordChar) {
+                wordChar.isCollected = true;
+                this.score += CHAR_BONUS;
+            } else {
+                this.score += CHAR_PENALTY;
+            }
+
             this.snakeSize++;
         } else {
             this.snakeBody.shift();
@@ -124,6 +139,15 @@ class Game {
         this.snakeBody.forEach((segment) => {
             this.board[reverseTransX(segment.position.x)][reverseTransY(segment.position.y)] = FIELDS.SNAKE;
         });
+
+        if (this.isWordCollected()) {
+            this.score += WORD_BONUS;
+            this.nextRound();
+        }
+    }
+
+    isWordCollected() {
+        return this.wordProgress.every((char) => char.isCollected);
     }
     
     addCollectible(code = null) {
