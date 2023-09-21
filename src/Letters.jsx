@@ -24,7 +24,7 @@ export function Letters() {
               size={0.8}
             >
               {letter.code}
-              <meshStandardMaterial color="black" />
+              <meshStandardMaterial color="white" />
             </Text3D>
           </Center>
         );
