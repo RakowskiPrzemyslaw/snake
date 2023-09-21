@@ -1,70 +1,17 @@
 import { useEffect } from "react";
 import { atom, useAtom } from "jotai";
-import { useLetters } from "./useLetters";
-import game from "../../game.json";
+import { gameBoard } from "../game/Game";
+import { collectiblesAtom, snakeAtom } from "../context/game";
 
 const timeAtom = atom(0);
 const directionAtom = atom({ x: 0, y: 0 });
-const snakeAtom = atom([{ position: { x: 0, y: 0 } }]);
 let interval;
 
 export function useSnake() {
   const [time, setTime] = useAtom(timeAtom);
   const [direction, setDirection] = useAtom(directionAtom);
   const [snake, setSnake] = useAtom(snakeAtom);
-  const { eatLetter, letters, resetLetters } = useLetters();
-
-  const updatePosition = () => {
-    setSnake((prevSnake) => {
-      const newPosition = {
-        x: prevSnake[0].position.x + direction.x,
-        y: prevSnake[0].position.y + direction.y,
-      };
-
-      const letterCollision = checkLetterCollision(newPosition);
-
-      return [
-        {
-          position: newPosition,
-        },
-        ...(letterCollision ? prevSnake : prevSnake.slice(0, -1)),
-      ];
-    });
-  };
-
-  const checkLetterCollision = (newPosition) => {
-    const letterCollision = letters.find((letter) => {
-      return (
-        letter.position.x === newPosition.x &&
-        letter.position.y === newPosition.y
-      );
-    });
-
-    if (letterCollision) {
-      eatLetter(letterCollision.letter);
-    }
-
-    return letterCollision;
-  };
-
-  const checkCollision = () => {
-    const snakeHead = snake[0].position;
-
-    const outOfBounds =
-      Math.abs(snakeHead.x) > game.size.x ||
-      Math.abs(snakeHead.y) > game.size.y;
-
-    if (snake.length <= 2) return outOfBounds;
-
-    const snakeBody = snake.slice(1);
-    const hitBody = snakeBody.some((segment) => {
-      return (
-        segment.position.x === snakeHead.x && segment.position.y === snakeHead.y
-      );
-    });
-
-    return outOfBounds || hitBody;
-  };
+  const [, setCollectibles] = useAtom(collectiblesAtom);
 
   const onKeydown = (event) => {
     if (event.key === "Escape") {
@@ -73,7 +20,7 @@ export function useSnake() {
     if (!interval) {
       interval = setInterval(() => {
         setTime((prevTime) => prevTime + 1);
-      }, 300);
+      }, 1000);
     }
 
     if (event.key === "ArrowUp") {
@@ -105,14 +52,24 @@ export function useSnake() {
   const reset = () => {
     setTime(0);
     setDirection({ x: 0, y: 0 });
-    setSnake([{ position: { x: 0, y: 0 } }]);
-    resetLetters();
+    gameBoard.reset();
+    setSnake(gameBoard.snakeBody);
+    setCollectibles(gameBoard.collectiblesOnBoard);
     clearInterval(interval);
     interval = null;
   };
 
   useEffect(() => {
-    updatePosition();
+    gameBoard.move(direction);
+
+    setSnake([
+        {
+            position: gameBoard.snakeHead,
+        },
+        ...gameBoard.snakeBody,
+    ]);
+    setCollectibles(gameBoard.collectiblesOnBoard);
+
   }, [time, direction]);
 
   useEffect(() => {
@@ -124,12 +81,6 @@ export function useSnake() {
       document.removeEventListener("keydown", onKeydown);
     };
   }, []);
-
-  useEffect(() => {
-    if (checkCollision()) {
-      reset();
-    }
-  }, [snake]);
 
   return {
     snake,

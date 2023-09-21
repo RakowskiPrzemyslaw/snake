@@ -2,15 +2,15 @@ import { Center, Text3D } from "@react-three/drei";
 import { useLetters } from "./hooks/useLetters";
 
 export function Letters() {
-  const { letters } = useLetters();
+  const { collectibles } = useLetters();
 
   return (
     <group>
-      {letters.map((letter) => {
+      {collectibles.map((collectible) => {
         return (
           <Center
-            key={letter.code}
-            position={[letter.position.x, letter.position.y, 0]}
+            key={collectible.id}
+            position={[collectible.position.x, collectible.position.y, 0]}
           >
             <Text3D
               font="/inter.json"
@@ -23,7 +23,7 @@ export function Letters() {
               letterSpacing={-0.06}
               size={0.8}
             >
-              {letter.code}
+              {collectible.code}
               <meshStandardMaterial color="white" />
             </Text3D>
           </Center>
