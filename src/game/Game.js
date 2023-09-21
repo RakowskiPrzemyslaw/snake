@@ -25,8 +25,8 @@ const CHAR_PENALTY = -1;
 const ORDER_BONUS = 10;
 
 const randCoord = () => ({
-    x: Math.floor(Math.random() * game.size.x),
-    y: Math.floor(Math.random() * game.size.y),
+    x: Math.floor(Math.random() * WIDTH),
+    y: Math.floor(Math.random() * HEIGHT),
 });
 
 const transX = (x) => x - game.size.x;
