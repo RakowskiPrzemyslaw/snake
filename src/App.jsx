@@ -1,9 +1,14 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, OrthographicCamera } from "@react-three/drei";
+import {
+  OrbitControls,
+  OrthographicCamera,
+  PositionalAudio,
+} from "@react-three/drei";
 import { Snake } from "./Snake";
 import { Letters } from "./Letters";
 import { useLetters } from "./hooks/useLetters";
 import { Background } from "./Background";
+import { PostProcessing } from "./PostProcessing";
 
 function App() {
   const { eatenLetters } = useLetters();
@@ -21,8 +26,14 @@ function App() {
             far={2000}
             position={[0, 0, 20]}
           />
+
+          <group position={[0, 0, 20]}>
+            <PositionalAudio autoplay distance={1} loop url="/background.mp3" />
+          </group>
+
           <OrbitControls />
 
+          <PostProcessing />
           <Background />
           <Snake />
           <Letters />

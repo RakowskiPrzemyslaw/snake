@@ -1,7 +1,7 @@
 import { generateAllCollectibles } from "../functions/generateAllCollectibles";
 import { shuffle } from "../functions/shuffle";
-import game from '../../game.json';
-import words from '../../words.json';
+import game from "../../game.json";
+import words from "../../words.json";
 
 const randElement = (array) => {
     return array[Math.floor(Math.random() * array.length)];
@@ -34,23 +34,29 @@ const reverseTransY = (y) => y + game.size.y;
 
 class Game {
     constructor(availableCollectibles, category = null) {
-        this.collectiblesPool = shuffle(generateAllCollectibles(availableCollectibles));
+        this.collectiblesPool = shuffle(
+            generateAllCollectibles(availableCollectibles)
+        );
 
         this.category = category ? category : randElement(Object.keys(words));
-        this.wordsPool = shuffle(words[this.category]).map((word) => word.toUpperCase());
-        
+        this.wordsPool = shuffle(words[this.category]).map((word) =>
+            word.toUpperCase()
+        );
+
         this.reset();
     }
 
     removeCollectibles() {
         this.collectiblesOnBoard = [];
-        
-        this.board = this.board.map((row) => row.map((field) => {
-            if (field === FIELDS.COLLECTIBLE) {
-                return FIELDS.EMPTY;
-            }
-            return field;
-        }));
+
+        this.board = this.board.map((row) =>
+            row.map((field) => {
+                if (field === FIELDS.COLLECTIBLE) {
+                    return FIELDS.EMPTY;
+                }
+                return field;
+            })
+        );
     }
 
     nextRound() {
@@ -78,35 +84,51 @@ class Game {
         }
 
         // check if a new position is out of the box
-        if (reverseTransX(newPosition.x) < 0 || reverseTransX(newPosition.x) > WIDTH - 1 || reverseTransY(newPosition.y) < 0 || reverseTransY(newPosition.y) > HEIGHT - 1) {
+        if (
+            reverseTransX(newPosition.x) < 0 ||
+            reverseTransX(newPosition.x) > WIDTH - 1 ||
+            reverseTransY(newPosition.y) < 0 ||
+            reverseTransY(newPosition.y) > HEIGHT - 1
+        ) {
             return;
         }
 
         this.snakeHead = newPosition;
-        this.snakeBody.push({ position: this.snakeHead});
+        this.snakeBody.push({ position: this.snakeHead });
 
-        const collected = this.collectiblesOnBoard.find((collectible) => collectible.position.x === this.snakeHead.x && collectible.position.y === this.snakeHead.y);
+        const collected = this.collectiblesOnBoard.find(
+            (collectible) =>
+                collectible.position.x === this.snakeHead.x &&
+                collectible.position.y === this.snakeHead.y
+        );
 
         if (collected) {
-            console.log('Collected: ', collected);
+            console.log("Collected: ", collected);
             // add to score
             this.eatenCollectibles.push(collected);
-            this.collectiblesOnBoard = this.collectiblesOnBoard.filter((collectible) => collectible.id !== collected.id);
+            this.collectiblesOnBoard = this.collectiblesOnBoard.filter(
+                (collectible) => collectible.id !== collected.id
+            );
             console.log(this.collectiblesOnBoard);
             this.snakeSize++;
         } else {
             this.snakeBody.shift();
         }
 
-        this.board[reverseTransX(this.snakeHead.x)][reverseTransY(this.snakeHead.y)] = FIELDS.EMPTY;
+        this.board[reverseTransX(this.snakeHead.x)][
+            reverseTransY(this.snakeHead.y)
+        ] = FIELDS.EMPTY;
 
         this.snakeBody.forEach((segment) => {
-            this.board[reverseTransX(segment.position.x)][reverseTransY(segment.position.y)] = FIELDS.SNAKE;
+            this.board[reverseTransX(segment.position.x)][
+                reverseTransY(segment.position.y)
+            ] = FIELDS.SNAKE;
         });
     }
-    
+
     addCollectible(code = null) {
-        const collectibleCodeToAdd = code || randElement(this.collectiblesPool).code;
+        const collectibleCodeToAdd =
+            code || randElement(this.collectiblesPool).code;
 
         let coord;
 
@@ -116,14 +138,14 @@ class Game {
         // console.log('Rand coord: ', coord);
 
         this.board[coord.x][coord.y] = FIELDS.COLLECTIBLE;
-        
+
         const collectible = {
             code: collectibleCodeToAdd,
             position: {
                 x: transX(coord.x),
                 y: transY(coord.y),
             },
-            color: 'orange',
+            color: randElement(game.colors.lights),
             id: Math.random().toString(36).substring(2, 9),
         };
 
@@ -149,14 +171,16 @@ class Game {
 
     reset() {
         this.snakeHead = { x: 0, y: 0 };
-        this.snakeBody = [{ position: { x: 0, y: 0 }}];
+        this.snakeBody = [{ position: { x: 0, y: 0 } }];
         this.snakeSize = 1;
         this.collectiblesOnBoard = [];
         this.eatenCollectibles = [];
         this.score = 0;
         this.alreadySelectedWords = [];
 
-        this.board = new Array(WIDTH).fill([]).map(() => new Array(HEIGHT).fill(FIELDS.EMPTY));
+        this.board = new Array(WIDTH)
+            .fill([])
+            .map(() => new Array(HEIGHT).fill(FIELDS.EMPTY));
 
         this.nextRound();
     }

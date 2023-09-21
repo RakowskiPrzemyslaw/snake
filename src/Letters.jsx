@@ -18,10 +18,14 @@ function Letter({ collectible }) {
   return (
     <group>
       <pointLight
-        color="orange"
+        color={collectible.color}
         castShadow
         intensity={6}
-        position={[collectible.position.x - 0.5, collectible.position.y - 0.5, 2]}
+        position={[
+          collectible.position.x - 0.5,
+          collectible.position.y - 0.5,
+          2,
+        ]}
       />
       <Center position={[collectible.position.x, collectible.position.y, 0]}>
         <Text3D
