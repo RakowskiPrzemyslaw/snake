@@ -107,6 +107,12 @@ class Game {
 
         // check if a new position is out of the box
         if (reverseTransX(newPosition.x) < 0 || reverseTransX(newPosition.x) > WIDTH - 1 || reverseTransY(newPosition.y) < 0 || reverseTransY(newPosition.y) > HEIGHT - 1) {
+            this.isGameOver = true;
+            return;
+        }
+
+        if (this.isOccupiedBySnake(reverseTransX(newPosition.x), reverseTransY(newPosition.y))) {
+            this.isGameOver = true;
             return;
         }
 
@@ -179,6 +185,10 @@ class Game {
 
     isOccupied(x, y) {
         return this.board[x][y] !== FIELDS.EMPTY;
+    }
+
+    isOccupiedBySnake(x, y) {
+        return this.board[x][y] === FIELDS.SNAKE;
     }
 
     selectWord() {

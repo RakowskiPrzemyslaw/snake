@@ -12,7 +12,7 @@ export function useSnake() {
   const [direction, setDirection] = useAtom(directionAtom);
   const [snake, setSnake] = useAtom(snakeAtom);
   const [, setCollectibles] = useAtom(collectiblesAtom);
-  const [, setRound] = useAtom(roundAtom);
+  const [round, setRound] = useAtom(roundAtom);
 
   const onKeydown = (event) => {
     if (event.key === "Escape") {
@@ -73,7 +73,8 @@ export function useSnake() {
     setRound({
         round: gameBoard.roundNumber,
         score: gameBoard.score,
-        word: gameBoard.wordProgress
+        word: gameBoard.wordProgress,
+        isGameOver: gameBoard.isGameOver,
     });
 
   }, [time, direction]);
@@ -87,6 +88,13 @@ export function useSnake() {
       document.removeEventListener("keydown", onKeydown);
     };
   }, []);
+
+  useEffect(() => {
+    if (round.isGameOver) {
+      clearInterval(interval);
+      interval = null;
+    }
+  }, [round]);
 
   return {
     snake,
