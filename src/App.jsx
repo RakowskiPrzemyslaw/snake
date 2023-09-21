@@ -19,7 +19,7 @@ function App() {
             zoom={40}
             near={1}
             far={2000}
-            position={[0, 0, 2]}
+            position={[0, 0, 20]}
           />
           {/* <OrbitControls /> */}
           <ambientLight intensity={1} />
