@@ -1,4 +1,6 @@
 import { atom, useAtom } from "jotai";
+import { gameBoard } from "../game/Game";
+
 
 const defaultLetters = [
   { letter: "D", position: { x: -9, y: 4 } },
@@ -7,12 +9,13 @@ const defaultLetters = [
   { letter: "A", position: { x: -4, y: -4 } },
 ];
 
-const lettersAtom = atom(defaultLetters);
+const lettersAtom = atom(gameBoard.collectiblesOnBoard);
 
 const eatenLettersAtom = atom([]);
 
 export function useLetters() {
   const [letters, setLetters] = useAtom(lettersAtom);
+  console.log('letters', letters);
   const [eatenLetters, setEatenLetters] = useAtom(eatenLettersAtom);
 
   const eatLetter = (letter) => {

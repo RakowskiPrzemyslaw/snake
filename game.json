@@ -2,5 +2,111 @@
   "size": {
     "x": 7,
     "y": 5
-  }
+  },
+  "collectibles": [
+    {
+      "code": "A",
+      "weight": 1
+    },
+    {
+      "code": "B",
+      "weight": 1
+    },
+    {
+      "code": "C",
+      "weight": 1
+    },
+    {
+      "code": "D",
+      "weight": 1
+    },
+    {
+      "code": "E",
+      "weight": 1
+    },
+    {
+      "code": "F",
+      "weight": 1
+    },
+    {
+      "code": "G",
+      "weight": 1
+    },
+    {
+      "code": "H",
+      "weight": 1
+    },
+    {
+      "code": "I",
+      "weight": 1
+    },
+    {
+      "code": "J",
+      "weight": 1
+    },
+    {
+      "code": "K",
+      "weight": 1
+    },
+    {
+      "code": "L",
+      "weight": 1
+    },
+    {
+      "code": "M",
+      "weight": 1
+    },
+    {
+      "code": "N",
+      "weight": 1
+    },
+    {
+      "code": "O",
+      "weight": 1
+    },
+    {
+      "code": "P",
+      "weight": 1
+    },
+    {
+      "code": "Q",
+      "weight": 1
+    },
+    {
+      "code": "R",
+      "weight": 1
+    },
+    {
+      "code": "S",
+      "weight": 1
+    },
+    {
+      "code": "T",
+      "weight": 1
+    },
+    {
+      "code": "U",
+      "weight": 1
+    },
+    {
+      "code": "V",
+      "weight": 1
+    },
+    {
+      "code": "W",
+      "weight": 1
+    },
+    {
+      "code": "X",
+      "weight": 1
+    },
+    {
+      "code": "Y",
+      "weight": 1
+    },
+    {
+      "code": "Z",
+      "weight": 1
+    }
+  ]
 }

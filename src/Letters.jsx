@@ -9,7 +9,7 @@ export function Letters() {
       {letters.map((letter) => {
         return (
           <Center
-            key={letter.letter}
+            key={letter.code}
             position={[letter.position.x, letter.position.y, 0]}
           >
             <Text3D
@@ -23,7 +23,7 @@ export function Letters() {
               letterSpacing={-0.06}
               size={0.8}
             >
-              {letter.letter}
+              {letter.code}
               <meshStandardMaterial color="black" />
             </Text3D>
           </Center>
