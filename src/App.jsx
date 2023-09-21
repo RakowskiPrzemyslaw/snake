@@ -22,7 +22,7 @@ function App() {
             position={[0, 0, 20]}
           />
           <OrbitControls />
-          <ambientLight intensity={1} />
+
           <Background />
           <Snake />
           <Letters />
