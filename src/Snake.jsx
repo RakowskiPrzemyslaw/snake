@@ -28,15 +28,24 @@ export function Snake() {
       </mesh>
       {snake.map((segment, index) => {
         return (
-          <Mask
-            key={index}
-            colorWrite
-            id={1}
-            position={[segment.position.x, segment.position.y, 0]}
-          >
-            <boxGeometry args={[1, 1, 0.5]} />
-            <meshBasicMaterial />
-          </Mask>
+          <group key={index}>
+            {index === 0 && (
+              <pointLight
+                intensity={6}
+                position={[segment.position.x, segment.position.y, 1]}
+                color="hotpink"
+              />
+            )}
+
+            <Mask
+              colorWrite
+              id={1}
+              position={[segment.position.x, segment.position.y, 0]}
+            >
+              <boxGeometry args={[1, 1, 0.5]} />
+              <meshBasicMaterial />
+            </Mask>
+          </group>
         );
       })}
     </group>
