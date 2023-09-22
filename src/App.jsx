@@ -11,7 +11,7 @@ import { Logo } from "./Logo";
 import { useEffect } from "react";
 
 function App() {
-  const [{ round, score, word, isGameOver }] = useAtom(roundAtom);
+  const [{ round, score, isGameOver }] = useAtom(roundAtom);
 
   useEffect(() => {}, [isGameOver]);
 
@@ -23,16 +23,6 @@ function App() {
             <Logo />
             <h2 className="text-4xl">{`Score: ${score}`}</h2>
           </div>
-          <h2 className="text-4xl">
-            {word.map((char, index) => (
-              <span
-                key={char.code + index}
-                className={char.isCollected ? "text-amber-500" : ""}
-              >
-                {char.code}
-              </span>
-            ))}
-          </h2>
           <h2 className="text-4xl">{`Round: ${round}`}</h2>
         </div>
       </div>
