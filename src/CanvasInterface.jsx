@@ -1,19 +1,26 @@
 import { animated, useSpring } from "@react-spring/three";
-import { OrthographicCamera, Svg } from "@react-three/drei";
+import { Center, OrthographicCamera, Svg } from "@react-three/drei";
 import { useAtom } from "jotai";
 import { roundAtom } from "./context/game";
 import { useEffect } from "react";
 
 const AnimatedOrthographicCamera = animated(OrthographicCamera);
 
+const bgAudio = new Audio("/music/background.mp3");
+bgAudio.loop = true;
+
 export function CanvasInterface() {
   const [{ isGameOver }] = useAtom(roundAtom);
 
   const [springs, api] = useSpring(() => ({
-    cameraPosition: [-45, 0, 20],
+    cameraPosition: [-50, 0, 20],
   }));
 
   const startGame = () => {
+    if (bgAudio.paused) {
+      bgAudio.play();
+    }
+
     api.start({
       cameraPosition: [0, 0, 20],
     });
@@ -21,7 +28,7 @@ export function CanvasInterface() {
 
   const gameOver = () => {
     api.start({
-      cameraPosition: [55, 0, 20],
+      cameraPosition: [50, 0, 20],
     });
   };
 
@@ -47,13 +54,12 @@ export function CanvasInterface() {
 
   return (
     <>
-      <Svg
-        position={[-50, 0, 2]}
-        scale={0.2}
-        src="/play.svg"
-        onClick={startGame}
-      />
-      <Svg position={[50, 0, 2]} scale={0.2} src="/game-over.svg" />
+      <Center position={[-50, 0, 2]}>
+        <Svg scale={0.2} src="/play.svg" onClick={startGame} />
+      </Center>
+      <Center position={[50, 0, 2]}>
+        <Svg scale={0.4} src="/game-over.svg" />
+      </Center>
       <AnimatedOrthographicCamera
         makeDefault
         zoom={35}
