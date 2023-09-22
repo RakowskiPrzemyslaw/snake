@@ -11,16 +11,12 @@ import { HtmlInterface } from "./HtmlInterface";
 import { PCFSoftShadowMap } from "three";
 import { CanvasInterface } from "./CanvasInterface";
 
-const bgAudio = new Audio("/music/background.mp3");
-bgAudio.loop = true;
-bgAudio.volume = 0.4;
-
 function App() {
   return (
     <>
       <HtmlInterface />
 
-      <div className="w-full h-full" onClick={() => { if (bgAudio.paused) { bgAudio.play() } }}>
+      <div className="w-full h-full">
         <Canvas gl={{ shadowMap: { enabled: true, type: PCFSoftShadowMap } }}>
           <Stats />
 
