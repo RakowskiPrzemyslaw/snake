@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { atom, useAtom } from "jotai";
+import debounce from 'lodash.debounce';
 import { gameBoard } from "../game/Game";
 import { collectiblesAtom, roundAtom, roundTimeAtom, snakeAtom } from "../context/game";
 import game from "../../game.json";
@@ -64,7 +65,7 @@ export function useSnake() {
     };
 
     useEffect(() => {
-        gameBoard.move(direction);
+        const hasRoundChanged = gameBoard.move(direction);
 
         setSnake([
             {
@@ -79,6 +80,10 @@ export function useSnake() {
             word: gameBoard.wordProgress,
             isGameOver: gameBoard.isGameOver,
         });
+
+        if (hasRoundChanged) {
+            setRoundTime(0);
+        }
     }, [time]);
 
     useEffect(() => {
@@ -93,7 +98,7 @@ export function useSnake() {
 
             clearInterval(interval);
             interval = null;
-            document.removeEventListener("keydown", onKeydown);
+            document.removeEventListener("keydown", debounce(onKeydown, game.rules.snakeSpeed));
         };
     }, []);
 
