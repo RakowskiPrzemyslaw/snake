@@ -21,7 +21,7 @@ export function useSnake() {
         if (event.key === "Escape") {
             return reset();
         }
-        if (!interval) {
+        if (!interval && !gameBoard.isGameOver) {
             interval = setInterval(() => {
                 setTime((prevTime) => prevTime + 1);
             }, game.rules.snakeSpeed);
@@ -79,7 +79,7 @@ export function useSnake() {
             word: gameBoard.wordProgress,
             isGameOver: gameBoard.isGameOver,
         });
-    }, [time, direction]);
+    }, [time]);
 
     useEffect(() => {
         document.addEventListener("keydown", onKeydown);
