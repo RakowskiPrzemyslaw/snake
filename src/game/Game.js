@@ -28,6 +28,16 @@ const CHAR_BONUS = 1;
 const CHAR_PENALTY = -1;
 const ORDER_BONUS = 10;
 
+export const RESULT = {
+  NOT_COLLECTED: '0',
+  COLLECTED: '1',
+  ROUND_COMPLETED: '2',
+  ROUND_COMPLETED_WITH_BONUS: '3',
+  COLLECTED_WITH_BONUS: '4',
+  COLLECTED_WITH_PENALTY: '5',
+  GAME_OVER: '6',
+};
+
 const randCoord = () => ({
   x: Math.floor(Math.random() * WIDTH),
   y: Math.floor(Math.random() * HEIGHT),
@@ -210,7 +220,7 @@ class Game {
       this.score += WORD_BONUS;
       this.nextRound();
 
-      return true;
+      return RESULT.ROUND_COMPLETED;
     }
 
     return false;

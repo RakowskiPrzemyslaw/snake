@@ -147,6 +147,7 @@ export function useSnake() {
             isGameOver: gameBoard.isGameOver,
         });
         setRoundTime(0);
+        setDirection({ x: 0, y: 0 });
 
         timer = setInterval(() => {
             setRoundTime((prevRoundTime) => prevRoundTime + 1);
