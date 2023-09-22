@@ -15,15 +15,15 @@ import { Timer } from "./Timer";
 import { HtmlInterface } from "./HtmlInterface";
 import { PCFSoftShadowMap } from "three";
 
+const bgAudio = new Audio("/music/background.mp3");
+bgAudio.loop = true;
+
 function App() {
   return (
     <>
-      <audio autoPlay loop>
-        <source src="/music/background.mp3" type="audio/mpeg" />
-      </audio>
       <HtmlInterface />
 
-      <div className="w-full h-full">
+      <div className="w-full h-full" onClick={() => { if (bgAudio.paused) { bgAudio.play() } }}>
         <Canvas gl={{ shadowMap: { enabled: true, type: PCFSoftShadowMap } }}>
           <Stats />
           <OrthographicCamera
