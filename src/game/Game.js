@@ -51,6 +51,8 @@ class Game {
     );
 
     this.reset();
+
+    this.hasStarted = false;
   }
 
   reset() {
@@ -71,6 +73,10 @@ class Game {
       .map(() => new Array(HEIGHT).fill(FIELDS.EMPTY));
 
     this.nextRound();
+
+    if (this.onResetCallback) {
+      this.onResetCallback();
+    }
   }
 
   removeCollectibles() {
@@ -107,9 +113,12 @@ class Game {
   }
 
   move(direction) {
+
     if (direction.x === 0 && direction.y === 0) {
       return;
     }
+    
+    this.hasStarted = true;
 
     const newPosition = {
       x: this.snakeHead.x + direction.x,

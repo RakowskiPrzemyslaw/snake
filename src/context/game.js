@@ -10,3 +10,4 @@ export const roundAtom = atom({
     isGameOver: gameBoard.isGameOver,
 });
 export const roundTimeAtom = atom(0);
+export const resetAtom = atom(false);
