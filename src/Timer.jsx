@@ -15,11 +15,11 @@ export function Timer() {
 
   return (
     <group>
-      <mesh position={[0, 0, -0.5]} receiveShadow castShadow>
+      {/* <mesh position={[0, 0, -0.5]} receiveShadow castShadow>
         <planeGeometry args={[width, height, width, height]} />
         <meshStandardMaterial color="#5c5c5c" />
-      </mesh>
-      
+      </mesh> */}
+
       <mesh position={[-3, -11.5, 0]}>
         <circleGeometry
           args={[0.4, 32, Math.PI / 2, 2 * Math.PI * timeLeftPercentage]}
