@@ -58,7 +58,7 @@ export function CanvasInterface() {
   return (
     <>
       <Center position={[-50, 0, 2]}>
-        <Svg scale={0.2} src="/play.svg" onClick={startGame} />
+        <Svg scale={0.6} src="/play.svg" onClick={startGame} />
       </Center>
       <Center position={[50, 0, 2]}>
         <Svg scale={0.7} src="/game-over.svg" />
