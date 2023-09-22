@@ -1,7 +1,7 @@
 import { animated, useSpring } from "@react-spring/three";
 import { Center, OrthographicCamera, Svg, Text } from "@react-three/drei";
 import { useAtom } from "jotai";
-import { roundAtom } from "./context/game";
+import { resetAtom, roundAtom } from "./context/game";
 import { useEffect } from "react";
 
 const AnimatedOrthographicCamera = animated(OrthographicCamera);
@@ -12,6 +12,7 @@ bgAudio.volume = 0.5;
 
 export function CanvasInterface() {
   const [{ isGameOver, score }] = useAtom(roundAtom);
+  const [, setReset] = useAtom(resetAtom);
 
   const [springs, api] = useSpring(() => ({
     cameraPosition: [-50, 0, 20],
@@ -42,6 +43,7 @@ export function CanvasInterface() {
   useEffect(() => {
     const onKeydown = (event) => {
       if (event.key === "Enter") {
+        setReset(true);
         startGame();
       }
     };

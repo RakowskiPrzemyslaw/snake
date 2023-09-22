@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { atom, useAtom } from "jotai";
 import debounce from 'lodash.debounce';
 import { gameBoard } from "../game/Game";
-import { collectiblesAtom, roundAtom, roundTimeAtom, snakeAtom } from "../context/game";
+import { collectiblesAtom, resetAtom, roundAtom, roundTimeAtom, snakeAtom } from "../context/game";
 import game from "../../game.json";
 
 const timeAtom = atom(0);
@@ -17,6 +17,9 @@ export function useSnake() {
     const [, setCollectibles] = useAtom(collectiblesAtom);
     const [round, setRound] = useAtom(roundAtom);
     const [roundTime, setRoundTime] = useAtom(roundTimeAtom);
+    const [reset, setReset] = useAtom(resetAtom);
+
+    
 
     const onKeydown = (event) => {
         if (event.key === "Escape") {
@@ -52,16 +55,6 @@ export function useSnake() {
                 return { x: 1, y: 0 };
             });
         }
-    };
-
-    const reset = () => {
-        setTime(0);
-        setDirection({ x: 0, y: 0 });
-        gameBoard.reset();
-        setSnake(gameBoard.snakeBody);
-        setCollectibles(gameBoard.collectiblesOnBoard);
-        clearInterval(interval);
-        interval = null;
     };
 
     useEffect(() => {
@@ -133,7 +126,33 @@ export function useSnake() {
         }
     }, [roundTime]);
 
+    useEffect(() => {
+        if (!reset) {
+            return;
+        }
+
+        gameBoard.reset();
+
+        setSnake([
+            {
+                position: gameBoard.snakeHead,
+            },
+            ...gameBoard.snakeBody,
+        ]);
+        setCollectibles(gameBoard.collectiblesOnBoard);
+        setRound({
+            round: gameBoard.roundNumber,
+            score: gameBoard.score,
+            word: gameBoard.wordProgress,
+            isGameOver: gameBoard.isGameOver,
+        });
+        setRoundTime(0);
+
+        setReset(false);
+    }, [reset]);
+
     return {
         snake,
+        reset
     };
 }
