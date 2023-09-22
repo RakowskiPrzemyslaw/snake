@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Noto";
+  src: url(/Noto.ttf);
+}
+
 html,
 body,
 #root {
@@ -11,6 +16,7 @@ body,
   padding: 0;
   background-color: #f7fafc;
   overflow: hidden;
+  font-family: "Noto";
 }
 
 #root {

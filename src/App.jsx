@@ -18,14 +18,15 @@ function App() {
   return (
     <>
       <div className="fixed z-10 text-white w-full p-2">
-        <div className="flex justify-between w-full">
-          <div className="flex">
-            <Logo />
-            <h2 className="text-4xl">{`Score: ${score}`}</h2>
-          </div>
-          <h2 className="text-4xl">{`Round: ${round}`}</h2>
-        </div>
+        <Logo />
       </div>
+
+      <div className="fixed z-10 flex justify-between w-full bottom-0 text-white p-2">
+        <h2 className="text-3xl">{`Score: ${score}`}</h2>
+
+        <h2 className="text-3xl">{`Round: ${round}`}</h2>
+      </div>
+
       <div className="w-full h-full">
         <Canvas>
           <OrthographicCamera
