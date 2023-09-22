@@ -4,7 +4,7 @@ export function Logo() {
       id="Layer_2"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 30.24 29.86"
-      className="w-16 h-16"
+      className="w-16 h-16 fill-white"
     >
       <g id="Layer_1-2">
         <g>

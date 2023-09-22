@@ -1,9 +1,9 @@
 import { useAtom } from "jotai";
 import { roundAtom, roundTimeAtom } from "./context/game";
 import { Text } from "@react-three/drei";
-import game from '../game.json';
+import game from "../game.json";
 
-const COLOR = '#ffffff';
+const COLOR = "#ffffff";
 const WIDTH = game.size.x * 2 + 1;
 const HEIGHT = 1.2;
 
@@ -27,8 +27,18 @@ export function Timer() {
           args={[0.35, 32, Math.PI / 2, 2 * Math.PI * timeLeftPercentage]}
         />
         <meshBasicMaterial color={COLOR} fillOpacity={100} />
-        { word.map((char, index) => (
-          <Text font="/noto.json" key={index} fillOpacity={char.isCollected ? 100 : 0.5} color={COLOR} fontSize={0.7} position={[1 + index, 0, 1]}>{char.code}</Text>))}
+        {word.map((char, index) => (
+          <Text
+            font="/noto.json"
+            key={index}
+            fillOpacity={char.isCollected ? 100 : 0.5}
+            color={COLOR}
+            fontSize={0.7}
+            position={[1 + index, 0, 1]}
+          >
+            {char.code}
+          </Text>
+        ))}
       </mesh>
     </group>
   );
