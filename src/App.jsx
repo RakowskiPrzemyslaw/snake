@@ -18,6 +18,9 @@ import { PCFSoftShadowMap } from "three";
 function App() {
   return (
     <>
+      <audio autoPlay loop>
+        <source src="/music/background.mp3" type="audio/mpeg" />
+      </audio>
       <HtmlInterface />
 
       <div className="w-full h-full">
