@@ -13,6 +13,7 @@ import { CanvasInterface } from "./CanvasInterface";
 
 const bgAudio = new Audio("/music/background.mp3");
 bgAudio.loop = true;
+bgAudio.volume = 0.4;
 
 function App() {
   return (

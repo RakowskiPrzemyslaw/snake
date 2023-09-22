@@ -3,6 +3,11 @@ import { shuffle } from "../functions/shuffle";
 import game from "../../game.json";
 import words from "../../words.json";
 
+const bite = new Audio('/music/bite.mp3');
+bite.loop = false;
+const gameOver = new Audio('/music/end-game.mp3');
+gameOver.loop = false;
+
 const randElement = (array) => {
   return array[Math.floor(Math.random() * array.length)];
 };
@@ -124,7 +129,11 @@ class Game {
       reverseTransY(newPosition.y) > HEIGHT - 1
     ) {
       console.log("Game over - our of board");
+      if (!this.isGameOver) {
+        gameOver.play();
+      }
       this.isGameOver = true;
+      
       return;
     }
 
@@ -134,6 +143,9 @@ class Game {
         reverseTransY(newPosition.y)
       )
     ) {
+      if (!this.isGameOver) {
+        gameOver.play();
+      }
       this.isGameOver = true;
       return;
     }
@@ -148,6 +160,8 @@ class Game {
     );
 
     if (collected) {
+      bite.play();
+      
       // add to score
       this.eatenCollectibles.push(collected);
       this.collectiblesOnBoard = this.collectiblesOnBoard.filter(
