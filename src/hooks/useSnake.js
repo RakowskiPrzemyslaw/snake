@@ -148,6 +148,10 @@ export function useSnake() {
         });
         setRoundTime(0);
 
+        timer = setInterval(() => {
+            setRoundTime((prevRoundTime) => prevRoundTime + 1);
+        }, 1000);
+
         setReset(false);
     }, [reset]);
 
