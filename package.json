@@ -11,6 +11,7 @@
     "generate-words": "node --experimental-specifier-resolution=node ./tools/generate-words.js"
   },
   "dependencies": {
+    "@react-spring/three": "^9.7.3",
     "@react-three/drei": "^9.84.2",
     "@react-three/fiber": "^8.14.2",
     "@react-three/postprocessing": "^2.15.1",
