@@ -11,7 +11,7 @@ bgAudio.loop = true;
 bgAudio.volume = 0.5;
 
 export function CanvasInterface() {
-  const [{ isGameOver }] = useAtom(roundAtom);
+  const [{ isGameOver, score }] = useAtom(roundAtom);
   const [, setReset] = useAtom(resetAtom);
 
   const [springs, api] = useSpring(() => ({
