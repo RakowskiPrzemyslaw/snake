@@ -1,5 +1,10 @@
 import { Canvas } from "@react-three/fiber";
-import { Float, OrbitControls, OrthographicCamera } from "@react-three/drei";
+import {
+  Float,
+  OrbitControls,
+  OrthographicCamera,
+  Stats,
+} from "@react-three/drei";
 import { Snake } from "./Snake";
 import { Letters } from "./Letters";
 import { Background } from "./Background";
@@ -8,6 +13,7 @@ import { PostProcessing } from "./PostProcessing";
 import { Timer } from "./Timer";
 
 import { HtmlInterface } from "./HtmlInterface";
+import { PCFSoftShadowMap } from "three";
 
 function App() {
   return (
@@ -15,7 +21,8 @@ function App() {
       <HtmlInterface />
 
       <div className="w-full h-full">
-        <Canvas>
+        <Canvas gl={{ shadowMap: { enabled: true, type: PCFSoftShadowMap } }}>
+          <Stats />
           <OrthographicCamera
             makeDefault
             zoom={35}
