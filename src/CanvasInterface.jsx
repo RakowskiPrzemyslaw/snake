@@ -1,5 +1,5 @@
 import { animated, useSpring } from "@react-spring/three";
-import { Center, OrthographicCamera, Svg } from "@react-three/drei";
+import { Center, OrthographicCamera, Svg, Text } from "@react-three/drei";
 import { useAtom } from "jotai";
 import { roundAtom } from "./context/game";
 import { useEffect } from "react";
@@ -11,7 +11,7 @@ bgAudio.loop = true;
 bgAudio.volume = 0.5;
 
 export function CanvasInterface() {
-  const [{ isGameOver }] = useAtom(roundAtom);
+  const [{ isGameOver, score }] = useAtom(roundAtom);
 
   const [springs, api] = useSpring(() => ({
     cameraPosition: [-50, 0, 20],
@@ -59,7 +59,12 @@ export function CanvasInterface() {
         <Svg scale={0.2} src="/play.svg" onClick={startGame} />
       </Center>
       <Center position={[50, 0, 2]}>
-        <Svg scale={0.4} src="/game-over.svg" />
+        <Svg scale={0.7} src="/game-over.svg" />
+      </Center>
+      <Center position={[50, 0.6, 2]}>
+        <Text font="/Noto.ttf" fontSize={0.6}>
+          SCORE: {score}
+        </Text>
       </Center>
       <AnimatedOrthographicCamera
         makeDefault
