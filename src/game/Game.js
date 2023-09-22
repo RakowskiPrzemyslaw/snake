@@ -17,7 +17,6 @@ const FIELDS = {
 
 const WIDTH = game.size.x * 2 + 1;
 const HEIGHT = game.size.y * 2 + 1;
-const NB_OF_RAND_COLLECTIBLES = 4;
 
 const WORD_BONUS = 10;
 const CHAR_BONUS = 1;
@@ -95,7 +94,7 @@ class Game {
       });
     }
 
-    for (let i = 0; i < NB_OF_RAND_COLLECTIBLES; i++) {
+    for (let i = 0; i < game.rules.additionalCollectibles; i++) {
       this.addCollectible();
     }
 

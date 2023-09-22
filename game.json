@@ -125,6 +125,7 @@
     ],
     "rules": {
         "snakeSpeed": 300,
-        "roundTime": 60
+        "roundTime": 60,
+        "additionalCollectibles": 10
     }
 }
