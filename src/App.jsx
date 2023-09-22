@@ -8,7 +8,6 @@ import { PostProcessing } from "./PostProcessing";
 import { Timer } from "./Timer";
 
 import { HtmlInterface } from "./HtmlInterface";
-import { PCFSoftShadowMap } from "three";
 import { CanvasInterface } from "./CanvasInterface";
 
 function App() {
@@ -17,7 +16,7 @@ function App() {
       <HtmlInterface />
 
       <div className="w-full h-full">
-        <Canvas gl={{ shadowMap: { enabled: true, type: PCFSoftShadowMap } }}>
+        <Canvas shadows="basic">
           <PostProcessing />
 
           <CanvasInterface />

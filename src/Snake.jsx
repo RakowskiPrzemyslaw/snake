@@ -38,6 +38,7 @@ export function Snake() {
             )}
 
             <Mask
+              castShadow
               colorWrite
               id={1}
               position={[segment.position.x, segment.position.y, 0]}

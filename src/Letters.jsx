@@ -18,6 +18,7 @@ function Letter({ collectible }) {
   return (
     <group>
       <pointLight
+        castShadow
         color={collectible.color}
         intensity={6}
         position={[
