@@ -186,7 +186,11 @@ class Game {
     if (this.isWordCollected()) {
       this.score += WORD_BONUS;
       this.nextRound();
+
+      return true;
     }
+
+    return false;
   }
 
   isWordCollected() {
