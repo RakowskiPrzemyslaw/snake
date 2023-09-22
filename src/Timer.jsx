@@ -29,12 +29,12 @@ export function Timer() {
         <meshBasicMaterial color={COLOR} fillOpacity={100} />
         {word.map((char, index) => (
           <Text
-            font="/noto.json"
+            font="/Noto.ttf"
             key={index}
             fillOpacity={char.isCollected ? 100 : 0.5}
             color={COLOR}
             fontSize={0.7}
-            position={[1 + index, 0, 1]}
+            position={[1 + index, 0.1, 1]}
           >
             {char.code}
           </Text>
