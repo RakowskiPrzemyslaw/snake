@@ -1,6 +1,5 @@
 import { EffectComposer, Noise, Vignette } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
-import { AfterimagePass } from "three/addons/postprocessing/AfterimagePass.js";
 
 export function PostProcessing() {
   return (

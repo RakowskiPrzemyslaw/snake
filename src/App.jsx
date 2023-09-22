@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, OrthographicCamera } from "@react-three/drei";
+import { Float, OrbitControls, OrthographicCamera } from "@react-three/drei";
 import { Snake } from "./Snake";
 import { Letters } from "./Letters";
 import { Background } from "./Background";
@@ -25,12 +25,14 @@ function App() {
           />
 
           <OrbitControls />
-          <Timer />
-
           <PostProcessing />
-          <Background />
-          <Snake />
-          <Letters />
+
+          <Float rotationIntensity={0.1} floatIntensity={0.1}>
+            <Timer />
+            <Background />
+            <Snake />
+            <Letters />
+          </Float>
         </Canvas>
       </div>
     </>
